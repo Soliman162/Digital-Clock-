@@ -9,16 +9,7 @@
 
 #include "../include/CLCD_interface.h"
 
-u8 Hours_u8Tens = 1;
-u8 Hours_u8Units = 2;
 
-u8 Minuts_u8Tens = 5;
-u8 Minuts_u8Units = 9;
-
-u8 Second_u8Tens = 5;
-u8 Second_u8Units = 9;
-
-u16 Clock_u16Counter = 3599;
 
 int main (void){
 
@@ -29,6 +20,18 @@ int main (void){
 
 	CLCD_voidInit();
 
+	u8 Hours_u8Tens = 0;
+	u8 Hours_u8Units = 0;
+
+	u8 Minuts_u8Tens = 0;
+	u8 Minuts_u8Units = 0;
+
+	u8 Second_u8Tens = 0;
+	u8 Second_u8Units = 0;
+
+	u8 *Day_ptru8Time = "AM";
+
+	u16 Clock_u16Counter = 0;
 
 	while(1){
 
@@ -48,6 +51,8 @@ int main (void){
 		CLCD_void_Send_Number(Second_u8Tens);
 		CLCD_void_Send_Number(Second_u8Units);
 
+		CLCD_voidSend_String(Day_ptru8Time);
+
 		STK_voidSetBusyWait(1000000);
 		Clock_u16Counter++;
 
@@ -62,6 +67,8 @@ int main (void){
 			{
 				Hours_u8Units = 1;
 				Hours_u8Tens = 0;
+				if( Day_ptru8Time == "AM" ){Day_ptru8Time = "PM";}
+				else{Day_ptru8Time = "AM";}
 			}
 			Clock_u16Counter = 0;
 
